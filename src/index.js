@@ -186,10 +186,27 @@ app.get('/receive/ProofOfEmailCredential', async function (req, res, next) {
 
     try {
         const credentialOffer  = await API.credOfferToken({
-            callbackURL: "http://callback.url.com",//`${URL_BASE}/receive/ProofOfEmailCredential`,
+            callbackURL: `${URL_BASE}/receive/ProofOfEmailCredential`,
             offeredCredentials: [
               {
                 type: 'ProofOfEmailCredential',
+                renderInfo: {
+                    renderAs: "document",
+                },
+                credential: {
+                    name: "Email Address",
+                    display: {
+                      properties: [
+                        {
+                          path: [ 
+                            "$.email" //contem o nome referente a key da claim
+                          ],
+                          label: "Email", 
+                          //value: "your email"
+                        },
+                      ]
+                    }
+                },
               },
             ],
         })
