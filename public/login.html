@@ -1,0 +1,115 @@
+<!doctype html>
+<head>
+	<style>
+        * {text-align:center;}
+        
+        body { 
+            padding:20px;
+        }
+
+        img {
+            width: 120px;
+        }
+           
+        #token {
+            word-break: break-all; 
+            overflow: scroll;
+            resize: none;
+        }
+        
+        .msg {
+            display:none;
+        }
+        footer {
+            position: fixed;
+            height: 30px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            margin-bottom: 0px;
+            font-size: 13px;
+        }
+        
+    </style>
+    
+    <title>Autenticador SSI</title>
+
+</head>
+
+<body>
+    <a href="https://www.rnp.br/inovacao/editais/pgid21">
+        <img src="https://www.rnp.br/sites/site-publico/themes/bootstrap_barrio/sitepublico/logo.png" id="rnplogo">
+    </a>
+	<h3 id="title">Escaneie o código QR com o aplicativo Jolocom SmartWallet para fornecer sua credencial de e-mail</h3>
+	<textarea id="token" rows="4" cols="50" readonly></textarea>
+    <br/><br/>
+    <h4 id="message1" class='msg'></h4>
+    <h4 id="message2" class='msg'></h4>
+    <h4 id="message3" class='msg'></h4>
+	<canvas id="qr-code"></canvas>
+</body>
+
+<footer>
+    Projeto Financiado pelo Programa de Gestão de Identidades PGid 2021
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+<script>
+
+    var porta = 7777
+
+    var URL_BASE = `http://wolff.gleeze.com:${porta}`
+
+    var qr;
+
+    function updateQR(value) {
+        qr = new QRious({ 
+            element: document.getElementById('qr-code'), 
+            size: 350, 
+            value: value
+        })
+
+        document.getElementById('token').value = value
+    }
+
+    `ws://wolff.gleeze.com:7777`
+
+    // Criando uma conexão WebSocket.
+    const socket = new WebSocket('ws://'+ URL_BASE.split('//')[1]);
+
+    // Ao conectar no servidor WS
+    socket.addEventListener('open', function (event) {
+        socket.send(JSON.stringify({messageType:"authenticationRequired"}))
+        console.log('conectado ao servidor WS')
+    });
+
+    // Escutar mensagens
+    socket.addEventListener('message', function (event) {
+
+        const response = JSON.parse(event.data)
+
+        if (response.messageType == "authenticationToken") {
+            console.log("mensagem recebida do servidor: token de autenticação")
+            updateQR(response.payload.token)
+        }
+        
+        else if (response.messageType == "successfullyAuthenticated") {
+            console.log("mensagem recebida do servidor: credencial válida")
+            document.getElementById('token').style.display = 'none'
+            document.getElementById('qr-code').style.display = 'none'
+            document.getElementById('title').innerText = `Recebemos e já verificamos a sua credencial!`
+            document.getElementById('message1').innerText = `E-mail: ${response.payload.email}`
+            document.getElementById('message2').innerText = `DID do portador da CV: ${response.payload.id}`
+            document.getElementById('message3').innerText = `DID do emissor da CV: ${response.payload.issuer}`
+            document.getElementById('message1').style.display = 'block'
+            document.getElementById('message2').style.display = 'block'
+            document.getElementById('message3').style.display = 'block'
+        }
+
+    });
+
+</script> 
+
+
+</html>

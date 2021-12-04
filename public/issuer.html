@@ -1,0 +1,141 @@
+<!doctype html>
+<head>
+	<style>
+        * {text-align:center;}
+        
+        body { 
+            padding:20px;
+        }
+
+        #rnplogo {
+            width: 120px;
+        }
+           
+        #token {
+            word-break: break-all; 
+            overflow: scroll;
+            resize: none;
+            display:none;
+        }
+        
+        .msg {
+            display:none;
+        }
+        footer {
+            position: fixed;
+            height: 30px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            margin-bottom: 0px;
+            font-size: 13px;
+        }
+
+        button {
+			background-color:#8c52ff;
+			color:white;
+		}
+
+        button:hover {
+            background-color:#3d2470;
+			color:white;
+        }
+
+        #emailInput {
+            width: 250px;
+        }
+
+        
+    </style>
+    
+    <title>Emissor SSI</title>
+
+</head>
+
+<body>
+    <a href="https://www.rnp.br/inovacao/editais/pgid21">
+        <img src="https://www.rnp.br/sites/site-publico/themes/bootstrap_barrio/sitepublico/logo.png" id="rnplogo">
+    </a>
+	<h3 id="title">Digite seu e-mail para emitir uma credencial</h3>
+
+    <div id="email">
+    <br/><br/>
+    E-mail:
+    <input id="emailInput" type="text" name="email" onblur="validacaoEmail(f1.email)"  maxlength="60" size='65'>
+    <button onclick="enviarEmail()">enviar</button>
+    </div>
+
+	<textarea id="token" rows="4" cols="50" readonly></textarea>
+    <br/><br/>
+
+	<canvas id="qr-code"></canvas>
+</body>
+
+<footer>
+    Projeto Financiado pelo Programa de Gestão de Identidades PGid 2021
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+<script>
+
+    var porta = 7777
+
+    var URL_BASE = `http://wolff.gleeze.com:${porta}`
+
+    var qr;
+
+    function updateQR(value) {
+        qr = new QRious({ 
+            element: document.getElementById('qr-code'), 
+            size: 450, 
+            value: value
+        })
+
+        document.getElementById('token').value = value
+    }
+
+    // Criando uma conexão WebSocket.
+    const socket = new WebSocket('ws://'+ URL_BASE.split('//')[1]);
+
+    // Ao conectar no servidor WS
+    socket.addEventListener('open', function (event) {
+        socket.send(JSON.stringify({messageType:"issuanceRequired"}))
+        console.log('conectado ao servidor WS')
+    });
+
+    // Escutar mensagens
+    socket.addEventListener('message', function (event) {
+
+        const response = JSON.parse(event.data)
+
+        if (response.messageType == "issuanceToken") {
+            console.log("mensagem recebida do servidor: token de emissão")
+            document.getElementById('token').style.display = 'none'
+            document.getElementById('qr-code').style.display = 'none'
+            updateQR(response.payload.token)
+        }
+
+        else if (response.messageType == "successfullyIssued") {
+            console.log("Credencial Emitida com Sucesso!")
+            document.getElementById('title').innerText = `Sua credencial foi emitida! Escaneie o código QR com o aplicativo Jolocom SmartWallet para armazená-la!`
+            updateQR(response.payload.token)
+        }
+
+    });
+
+    function enviarEmail() {
+        document.getElementById('email').style.display = 'none'
+        var email = document.getElementById("emailInput").value;
+        socket.send(JSON.stringify({messageType:"email", payload:{email: email}}))
+        document.getElementById('title').innerText = `Escaneie o código QR com o aplicativo Jolocom SmartWallet para emitir sua credencial de e-mail!`
+        document.getElementById('token').style.display = 'inline-block'
+        document.getElementById('qr-code').style.display = 'inline-block'
+       
+        
+    }
+
+</script> 
+
+
+</html>
