@@ -14,13 +14,31 @@ Esta implementação faz uso da ferramenta [Jolocom SDK](https://jolocom.github.
 
 Para poder instalar e executar a ferramenta, o [Node.js](https://nodejs.org/en/) v10 ou superior é necessário. Além disso, também será utilizado o gerenciador de pacotes [npm](https://docs.npmjs.com/) v1.3.2 ou superior.
 
-Primeiro, é necessário instalar as depêndencias da ferramenta. Isso pode ser feito através da seguinte linha de comando:
+Após instalar o [Node.js](https://nodejs.org/en/) e o [npm](https://docs.npmjs.com/), é necessário ter uma cópia deste projeto em um diretório local. Logo em seguida, é necessário instalar as depêndencias da ferramenta. Isso pode ser feito através da seguinte linha de comando no **diretório do projeto**:
 
 ```
 npm i
 ```
 
-Após a instalação das depêndencias, é necessário configurar a ferramenta. Para isso, você precisa entrar nos arquivos ```config.js```, ```/public/index.html``` e ```/public/issuer.html``` para definir os parâmetros ```porta``` e ```URL_BASE```. Esses parâmetros são importante definir para que a ferramenta possa ser instanciada corretamente e para definir o caminho de rede pelo qual a solução receberá mensagens do dispositivo móvel.
+Após a instalação das depêndencias, é necessário configurar a ferramenta. Para isso, você precisa entrar nos arquivos ```config.js```, ```/public/index.html``` e ```/public/issuer.html```, localizar e definir os parâmetros ```porta``` e ```URL_BASE```.  
+
+O parâmetro ```porta``` indica a porta que o serviço será executado localmente. Para instanciar o serviço, por exemplo, na porta **8080**, defina o parâmetro como descrito a seguir:
+
+```
+const porta = 8080
+```
+
+O parâmetro ```URL_BASE``` indica o endereço público (IP ou Nome de Domínio) da máquina local, pelo qual o serviço usará para escutar as requisições HTTP. Antes de definir, certifique-se de fazer um encaminhamento de porta corretamente para a porta definida no passo anterior. Feito isso, você utilizará o seu nome de domínio ou IP público para definir o parâmetro seguindo o exemplo abaixo:
+
+```
+const URL_BASE = `http://example.name.domain:${porta}`
+```
+ou 
+```
+const URL_BASE = `http://123.456.789:${porta}`
+```
+
+Esses parâmetros precisam ser definidos para que a ferramenta possa ser instanciada corretamente e para definir o caminho de rede pelo qual a solução receberá mensagens do dispositivo móvel.
 
 ## Como Usar
 
