@@ -1,6 +1,6 @@
 /* ............... DEPENDENCIAS do Servidor ............... */
 
-import {porta, URL_BASE} from "../config.js"
+import {porta, URL_BASE, fullURL} from "../config.js"
 import express, { response } from "express";
 const app = express()
 import bodyParser from 'body-parser';
@@ -54,14 +54,14 @@ wss.on('connection', async function connection(ws, req) {
         console.log(`\nmensagem de um cliente WS recebida: ${response.messageType}`)
 
         if (response.messageType == "authenticationRequired") {
-            const tokenJSON = await fetch(`${URL_BASE}/authenticate`).then(res => res.text()).then(res => JSON.parse(res))
+            const tokenJSON = await fetch(`${fullURL}/authenticate`).then(res => res.text()).then(res => JSON.parse(res))
             ws.identifier = tokenJSON.identifier
             const response = {messageType: "authenticationToken", payload: tokenJSON}
             ws.send(JSON.stringify(response))
         } 
         
         else if (response.messageType == "issuanceRequired") {
-            const tokenJSON = await fetch(`${URL_BASE}/receive/ProofOfEmailCredential`).then(res => res.text()).then(res => JSON.parse(res))
+            const tokenJSON = await fetch(`${fullURL}/receive/ProofOfEmailCredential`).then(res => res.text()).then(res => JSON.parse(res))
             ws.identifier = tokenJSON.identifier
             const response = {messageType: "issuanceToken", payload: tokenJSON}
             ws.send(JSON.stringify(response))
@@ -124,7 +124,7 @@ app.get('/authenticate', async function (req, res, next) {
 
     try {
         const credentialRequest = await API.credRequestToken({
-            callbackURL: `${URL_BASE}/authenticate`,
+            callbackURL: `${fullURL}/authenticate`,
             credentialRequirements: [
               {
                 type: ['Credential','ProofOfEmailCredential'],
@@ -186,7 +186,7 @@ app.get('/receive/ProofOfEmailCredential', async function (req, res, next) {
 
     try {
         const credentialOffer  = await API.credOfferToken({
-            callbackURL: `${URL_BASE}/receive/ProofOfEmailCredential`,
+            callbackURL: `${fullURL}/receive/ProofOfEmailCredential`,
             offeredCredentials: [
               {
                 type: 'ProofOfEmailCredential',
@@ -279,6 +279,12 @@ app.post('/receive/ProofOfEmailCredential', async function (req, res, next) {
     }
 })
 
+/* ............... Get na página inicial redireciona para login ............... */
+
+app.get('/', function(req, res) {
+    res.redirect('/login');
+});
+
 /* ............... Front-End para o Fluxo de VERIFICAÇÃO ............... */
 
 app.get('/login', function(req, res) {
@@ -296,6 +302,6 @@ app.get('/issuer', function(req, res) {
 console.log("\nIniciando Servidor...")
 
 server.listen(porta, () => {
-    console.log(`Servidor está executando em ${URL_BASE}`)
+    console.log(`Servidor está executando em ${fullURL}`)
     console.log()
 })

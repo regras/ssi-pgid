@@ -1,5 +1,21 @@
-const porta = 7777
+//-----> Configure os PARÂMETROS AQUI!
 
-const URL_BASE = `http://issuer-jolocom.gidlab.rnp.br` //`http://issuer-jolocom.gidlab.rnp.br:${porta}`
+//Porta da aplicação
+var porta = 7777
 
-export {porta, URL_BASE}
+//URL_BASE
+var URL_BASE = `http://issuer-jolocom.gidlab.rnp.br`
+
+
+
+function getFullURL(url, port) {
+    if (url[url.length -1] == '/') {
+        return url.slice(0,-1) + `:${port}`
+    } else {
+        return url + `:${port}`
+    }
+}
+
+var fullURL = getFullURL(URL_BASE,porta)
+
+export {porta, URL_BASE, fullURL}

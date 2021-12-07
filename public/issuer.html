@@ -79,9 +79,25 @@
 
 <script>
 
+    //-----> Configure os PARÂMETROS AQUI!
+
+    //PORTA
     var porta = 80
 
-    var URL_BASE = `http://issuer-jolocom.gidlab.rnp.br:${porta}`
+    //URL_BASE
+    var URL_BASE = `http://issuer-jolocom.gidlab.rnp.br`
+
+
+    function getFullWebSocketURL(url, port) {
+        url = 'ws://'+ url.split('//')[1]
+        if (url[url.length -1] == '/') {
+            return url.slice(0,-1) + `:${port}`
+        } else {
+            return url + `:${port}`
+        }
+    }
+
+    var wsURL = getFullURL(URL_BASE,porta)
 
     var qr;
 
@@ -96,7 +112,7 @@
     }
 
     // Criando uma conexão WebSocket.
-    const socket = new WebSocket('ws://'+ URL_BASE.split('//')[1]);
+    const socket = new WebSocket(wsURL);
 
     // Ao conectar no servidor WS
     socket.addEventListener('open', function (event) {

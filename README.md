@@ -25,17 +25,18 @@ Após a instalação das depêndencias, é necessário configurar a ferramenta. 
 O parâmetro ```porta``` indica a porta em que o serviço aguardará pedidos de conexão. Para instanciar o serviço, por exemplo, na porta **8080**, defina o parâmetro como descrito a seguir:
 
 ```
-const porta = 8080
+var porta = 8080
 ```
 
 O parâmetro ```URL_BASE``` indica o endereço público (IP ou Nome de Domínio) da máquina na qual o serviço será executado e aguardará as requisições HTTP na porta definida no passo anterior. Feito isso, o nome de domínio ou IP público será usado como no exemplo abaixo:
+No caso de um nome de domínio, configure da seguinte forma:
 
 ```
-const URL_BASE = `http://example.name.domain:${porta}`
+var URL_BASE = 'http://example.name.domain'
 ```
-ou 
+Caso seja um IP público, configure da seguinte forma:
 ```
-const URL_BASE = `http://aaa.bbb.ccc.ddd:${porta}`
+var URL_BASE = 'http://aaa.bbb.ccc.ddd'
 ```
 
 Esses parâmetros precisam ser definidos para que a ferramenta possa ser instanciada corretamente e para definir o caminho de rede pelo qual a solução receberá mensagens do dispositivo móvel.
@@ -65,9 +66,9 @@ A aplicação suporta dois tipos de fluxos:
 - fluxo de solicitação, fornecimento e verificação de credenciais verificáveis.
 
 
-Para acessar a interface de **emissão**, acesse pelo navegador (Requisição HTTP do tipo GET) o seguinte URL: ```URL_BASE/issuer```. 
+Para acessar a interface de **emissão**, acesse pelo navegador (Requisição HTTP do tipo GET) o seguinte URL: ```URL_BASE:porta/issuer```. 
 
-Para acessar a interface de **autenticação**, acesse pelo navegador (Requisição HTTP do tipo GET) o seguinte URL: ```URL_BASE/login```. 
+Para acessar a interface de **autenticação**, acesse pelo navegador (Requisição HTTP do tipo GET) o seguinte URL: ```URL_BASE:porta/login```. 
 
 ---
 ## Autores
