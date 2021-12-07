@@ -2,67 +2,67 @@
 
 ## Introdução 
 
-A Identidade Autossoberana (SSI) é um padrão emergente baseado em [Identidades Descentralizadas](https://w3c.github.io/did-core/) e [Credenciais Verificáveis](https://w3c.github.io/vc-data-model/) que surgiu da necessidade dos usuários terem controle absoluto e exclusivo de seus dados, que no ecossistema atual estão centralizados e em posse de terceiros. Essa nova arquitetura contribui para melhorias de privacidade e diminuição dos riscos de vazamentos. Este projeto objetiva estudar, por meio de várias análises e experimentações, uma das principais soluções SSI - [Jolocom](https://jolocom.io/wp-content/uploads/2019/12/Jolocom-Whitepaper-v2.1-A-Decentralized-Open-Source-Solution-for-Digital-Identity-and-Access-Management.pdf).
+A Identidade Autossoberana (SSI) é um padrão emergente baseado em [Identidades Descentralizadas](https://w3c.github.io/did-core/) e [Credenciais Verificáveis](https://w3c.github.io/vc-data-model/) que surgiu da necessidade dos usuários terem controle absoluto e exclusivo de seus dados, que no ecossistema atual estão centralizados e em posse de terceiros. Essa nova arquitetura contribui para melhorias de privacidade e diminuição dos riscos de vazamentos de informações pessoais. Este projeto objetiva estudar, por meio de várias análises e experimentações, uma das principais soluções SSI - [Jolocom](https://jolocom.io/wp-content/uploads/2019/12/Jolocom-Whitepaper-v2.1-A-Decentralized-Open-Source-Solution-for-Digital-Identity-and-Access-Management.pdf) e avaliar a possibilidade de integração da mesma com a federação CAFe em uma fase de transição de uma tecnologia baseada em federação de identidades para a outra baseada em identidades autossoberanas.
 
 Esta implementação faz uso da ferramenta [Jolocom SDK](https://jolocom.github.io/jolocom-sdk/1.0.0/).
 
-#### Projeto Financiado pelo Programa de Gestão de Identidades PGID 2021
+#### Projeto Financiado pelo Programa de Gestão de Identidades PGID 2021 da RNP (Rede Nacional de Ensino e Pesquisa - https://www.rnp.br).
 
 ---
 
 ## Configurando a Plataforma
 
-Para poder instalar e executar a ferramenta, o [Node.js](https://nodejs.org/en/) v10 ou superior é necessário. Além disso, também será utilizado o gerenciador de pacotes [npm](https://docs.npmjs.com/) v1.3.2 ou superior.
+Para poder instalar e executar a ferramenta, é necessário instalar o pacote [Node.js](https://nodejs.org/en/) v10 ou superior e o gerenciador de pacotes [npm](https://docs.npmjs.com/) v1.3.2 ou superior.
 
-Após instalar o [Node.js](https://nodejs.org/en/) e o [npm](https://docs.npmjs.com/), é necessário ter uma cópia deste projeto em um diretório local. Logo em seguida, é necessário instalar as depêndencias da ferramenta. Isso pode ser feito através da seguinte linha de comando no **diretório do projeto**:
+Em seguida, é necessário baixar uma cópia deste projeto em um diretório local e instalar as depêndencias Jolocom. Isso pode ser feito através da seguinte linha de comando no **diretório do projeto**:
 
 ```
 npm i
 ```
 
-Após a instalação das depêndencias, é necessário configurar a ferramenta. Para isso, você precisa entrar nos arquivos ```config.js```, ```/public/index.html``` e ```/public/issuer.html```, localizar e definir os parâmetros ```porta``` e ```URL_BASE```.  
+Após a instalação das depêndencias, é necessário configurar a ferramenta. Para isso, é preciso localizar e definir os parâmetros ```porta``` e ```URL_BASE``` nos arquivos ```config.js```, ```/public/index.html``` e ```/public/issuer.html```.
 
-O parâmetro ```porta``` indica a porta que o serviço será executado localmente. Para instanciar o serviço, por exemplo, na porta **8080**, defina o parâmetro como descrito a seguir:
+O parâmetro ```porta``` indica a porta em que o serviço aguardará pedidos de conexão. Para instanciar o serviço, por exemplo, na porta **8080**, defina o parâmetro como descrito a seguir:
 
 ```
 const porta = 8080
 ```
 
-O parâmetro ```URL_BASE``` indica o endereço público (IP ou Nome de Domínio) da máquina local, pelo qual o serviço usará para escutar as requisições HTTP. Antes de definir, certifique-se de fazer um encaminhamento de porta corretamente para a porta definida no passo anterior. Feito isso, você utilizará o seu nome de domínio ou IP público para definir o parâmetro seguindo o exemplo abaixo:
+O parâmetro ```URL_BASE``` indica o endereço público (IP ou Nome de Domínio) da máquina na qual o serviço será executado e aguardará as requisições HTTP na porta definida no passo anterior. Feito isso, o nome de domínio ou IP público será usado como no exemplo abaixo:
 
 ```
 const URL_BASE = `http://example.name.domain:${porta}`
 ```
 ou 
 ```
-const URL_BASE = `http://123.456.789:${porta}`
+const URL_BASE = `http://aaa.bbb.ccc.ddd:${porta}`
 ```
 
 Esses parâmetros precisam ser definidos para que a ferramenta possa ser instanciada corretamente e para definir o caminho de rede pelo qual a solução receberá mensagens do dispositivo móvel.
 
 ## Como Usar
 
-A ferramenta fará uso de um dispositivo móvel no qual deverá ser instanciado previamente uma identidade autossoberana através do aplicativo [Jolocom SmartWallet](https://github.com/jolocom/smartwallet-app). A instalação pode ser feita em dispositivos [iOS](https://apps.apple.com/us/app/jolocom-smartwallet/id1223869062) ou [Android](https://play.google.com/store/apps/details?id=com.jolocomwallet).
+A ferramenta fará uso de um dispositivo móvel no qual deve ser instanciado previamente uma identidade autossoberana através do aplicativo [Jolocom SmartWallet](https://github.com/jolocom/smartwallet-app). A instalação pode ser feita em dispositivos [iOS](https://apps.apple.com/us/app/jolocom-smartwallet/id1223869062) ou [Android](https://play.google.com/store/apps/details?id=com.jolocomwallet).
 
-### Inicializando a Aplicação
+### Iniciando a aplicação
 
-Para executar a aplicação em modo de desenvolvedor fazendo uso da ferramenta [nodemon](https://www.npmjs.com/package/nodemon), execute a seguinte linha de comando:
+Para executar a aplicação em modo de desenvolvedor, fazendo uso da ferramenta [nodemon](https://www.npmjs.com/package/nodemon), execute a seguinte linha de comando.
 
 ```
 npm run test
 ```
 
-Caso queira executar a aplicação normalmente, execute a seguinte linha de comando:
+Caso queira executar a aplicação em modo normal, execute a seguinte linha de comando.
 
 ```
 npm run start
 ```
 
-### Acessando a Interface
+### Acessando a interface
 
 A aplicação suporta dois tipos de fluxos: 
-- Fluxo de emissão e recebimento de credenciais verificáveis da plataforma de testes;
-- Fluxo de solicitação, fornecimento e verificação de credenciais verificáveis.
+- fluxo de emissão e recebimento de credenciais verificáveis da plataforma de testes;
+- fluxo de solicitação, fornecimento e verificação de credenciais verificáveis.
 
 
 Para acessar a interface de **emissão**, acesse pelo navegador (Requisição HTTP do tipo GET) o seguinte URL: ```URL_BASE/issuer```. 
