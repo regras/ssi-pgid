@@ -1,14 +1,15 @@
 //-----> Configure os PARÂMETROS AQUI!
 
-//Porta da aplicação
-var porta = 7777
+//Porta da aplicação local
+var LOCAL_PORT = 7777
+
+//Porta da aplicação pública (após encaminhmento)
+var PUBLIC_PORT = 80
 
 //URL_BASE
-var URL_BASE = `http://issuer-jolocom.gidlab.rnp.br`
+var PUBLIC_URL = `http://issuer-jolocom.gidlab.rnp.br`
 
-
-
-function getFullURL(url, port) {
+function fixURL(url,port) {
     if (url[url.length -1] == '/') {
         return url.slice(0,-1) + `:${port}`
     } else {
@@ -16,6 +17,6 @@ function getFullURL(url, port) {
     }
 }
 
-var fullURL = getFullURL(URL_BASE,porta)
+PUBLIC_URL = fixURL(PUBLIC_URL, PUBLIC_PORT)
 
-export {porta, URL_BASE, fullURL}
+export {LOCAL_PORT, PUBLIC_PORT, PUBLIC_URL}

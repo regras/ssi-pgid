@@ -59,11 +59,11 @@
 
     //-----> Configure os PARÂMETROS AQUI!
 
-    //PORTA
-    var porta = 80
+    //PORTA do serviço público
+    var PUBLIC_PORT = 80
 
-    //URL_BASE
-    var URL_BASE = `http://issuer-jolocom.gidlab.rnp.br`
+    //URL do serviço público
+    var PUBLIC_URL = `http://issuer-jolocom.gidlab.rnp.br`
 
 
     function getFullWebSocketURL(url, port) {
@@ -75,7 +75,7 @@
         }
     }
 
-    var wsURL = getFullWebSocketURL(URL_BASE,porta)
+    var wsURL = getFullWebSocketURL(PUBLIC_URL,PUBLIC_PORT)
 
     var qr;
 
