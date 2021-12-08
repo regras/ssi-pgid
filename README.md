@@ -32,11 +32,11 @@ O parâmetro ```PUBLIC_URL``` indica o endereço público (IP ou Nome de Domíni
 
 No caso de um nome de domínio, configure da seguinte forma:
 ```js
-var URL_BASE = 'http://example.name.domain'
+var PUBLIC_URL = 'http://example.name.domain'
 ```
 Caso seja um IP público, configure da seguinte forma:
 ```js
-var URL_BASE = 'http://aaa.bbb.ccc.ddd'
+var PUBLIC_URL = 'http://aaa.bbb.ccc.ddd'
 ```
 O parâmetro ```PUBLIC_PORT``` indica a porta pública para acessar o serviço. Essa porta dependerá exclusivamente do encaminhamento de porta feita. Caso seja feito um encaminhamento de porta da porta local ```LOCAL_PORT``` para uma porta pública, como por exemplo, na porta  **7777**, defina o parâmetro como descrito a seguir:
 
