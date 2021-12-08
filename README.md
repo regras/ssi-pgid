@@ -16,7 +16,7 @@ Para poder instalar e executar a ferramenta, é necessário instalar o pacote [N
 
 Em seguida, é necessário baixar uma cópia deste projeto em um diretório local e instalar as depêndencias Jolocom. Isso pode ser feito através da seguinte linha de comando no **diretório do projeto**:
 
-```sh
+```console
 cd gid-autossoberana-jolocom
 npm i
 ```
@@ -25,22 +25,22 @@ Após a instalação das depêndencias, é necessário configurar a ferramenta. 
 
 O parâmetro ```LOCAL_PORT``` indica a porta em que o serviço será executado localmente em uma máquina. Para instanciar o serviço, por exemplo, na porta local **8080**, defina o parâmetro como descrito a seguir:
 
-```
+```js
 var LOCAL_PORT = 8080
 ```
 O parâmetro ```PUBLIC_URL``` indica o endereço público (IP ou Nome de Domínio) da máquina na qual o serviço será executado e aguardará as requisições HTTP. O nome de domínio ou IP público será usado como no exemplo abaixo:
 No caso de um nome de domínio, configure da seguinte forma:
 
-```
+```js
 var URL_BASE = 'http://example.name.domain'
 ```
 Caso seja um IP público, configure da seguinte forma:
-```
+```js
 var URL_BASE = 'http://aaa.bbb.ccc.ddd'
 ```
 O parâmetro ```PUBLIC_PORT``` indica a porta pública para acessar o serviço. Essa porta dependerá exclusivamente do encaminhamento de porta feita. Caso seja feito um encaminhamento de porta da porta local ```LOCAL_PORT``` para uma porta pública, como por exemplo, na porta  **7777**, defina o parâmetro como descrito a seguir:
 
-```
+```js
 var LOCAL_PORT = 7777
 ```
 
@@ -55,13 +55,13 @@ A ferramenta fará uso de um dispositivo móvel no qual deve ser instanciado pre
 
 Para executar a aplicação em modo de desenvolvedor, fazendo uso da ferramenta [nodemon](https://www.npmjs.com/package/nodemon), execute a seguinte linha de comando.
 
-```sh
+```console
 npm run test
 ```
 
 Caso queira executar a aplicação em modo normal, execute a seguinte linha de comando.
 
-```sh
+```console
 npm run start
 ```
 
