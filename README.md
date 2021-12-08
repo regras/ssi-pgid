@@ -29,8 +29,8 @@ O parâmetro ```LOCAL_PORT``` indica a porta em que o serviço será executado l
 var LOCAL_PORT = 8080
 ```
 O parâmetro ```PUBLIC_URL``` indica o endereço público (IP ou Nome de Domínio) da máquina na qual o serviço será executado e aguardará as requisições HTTP. O nome de domínio ou IP público será usado como no exemplo abaixo:
-No caso de um nome de domínio, configure da seguinte forma:
 
+No caso de um nome de domínio, configure da seguinte forma:
 ```js
 var URL_BASE = 'http://example.name.domain'
 ```
@@ -43,7 +43,6 @@ O parâmetro ```PUBLIC_PORT``` indica a porta pública para acessar o serviço. 
 ```js
 var LOCAL_PORT = 7777
 ```
-
 
 Esses parâmetros precisam ser definidos para que a ferramenta possa ser instanciada corretamente e para definir o caminho de rede pelo qual a solução receberá mensagens do dispositivo móvel.
 
